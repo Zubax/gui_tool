@@ -99,6 +99,7 @@ class MainWindow(QMainWindow):
         super(MainWindow, self).__init__()
         self.setWindowTitle('UAVCAN GUI Tool')
         self.setWindowIcon(get_app_icon())
+        self.setStyleSheet("background-image: url(:/images/background.jpg);")
 
         self._node = node
         self._successive_node_errors = 0
