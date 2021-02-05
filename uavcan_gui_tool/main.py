@@ -12,6 +12,7 @@ import os
 import sys
 import time
 import tempfile
+import pkg_resources
 
 assert sys.version[0] == '3'
 
@@ -99,7 +100,9 @@ class MainWindow(QMainWindow):
         super(MainWindow, self).__init__()
         self.setWindowTitle('UAVCAN GUI Tool')
         self.setWindowIcon(get_app_icon())
-        self.setStyleSheet("background-image: url(:/images/background.jpg);")
+
+        bg = pkg_resources.resource_filename('uavcan_gui_tool', os.path.join('images', 'background.jpg'))
+        self.setStyleSheet("MainWindow { border-image: url(" + bg + ") 0 0 0 0 stretch stretch; }")
 
         self._node = node
         self._successive_node_errors = 0
