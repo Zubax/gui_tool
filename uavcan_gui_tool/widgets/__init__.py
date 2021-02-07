@@ -11,9 +11,9 @@ import re
 import pkg_resources
 import queue
 from PyQt5.QtWidgets import QTableWidget, QTableWidgetItem, QAbstractItemView, QHeaderView, QApplication, QWidget, \
-    QComboBox, QCompleter, QPushButton, QHBoxLayout, QVBoxLayout, QMessageBox
+    QComboBox, QCompleter, QPushButton, QHBoxLayout, QVBoxLayout, QMessageBox, QLabel
 from PyQt5.QtCore import Qt, QTimer, QStringListModel
-from PyQt5.QtGui import QColor, QKeySequence, QFont, QFontInfo, QIcon
+from PyQt5.QtGui import QColor, QKeySequence, QFont, QFontInfo, QIcon, QPixmap
 from logging import getLogger
 import qtawesome
 from functools import partial
@@ -646,6 +646,23 @@ def get_app_icon():
         logger.error('Could not load icon', exc_info=True)
         _APP_ICON_OBJECT = QIcon()
     return _APP_ICON_OBJECT
+
+
+def get_logo_label():
+    global _APP_LABEL_OBJECT
+    try:
+        return _APP_LABEL_OBJECT
+    except NameError:
+        pass
+    # noinspection PyBroadException
+    try:
+        fn = pkg_resources.resource_filename('uavcan_gui_tool', os.path.join('images', 't-motor_212x50.jpg'))
+        _APP_LABEL_OBJECT = QLabel()
+        _APP_LABEL_OBJECT.setPixmap(QPixmap(fn))
+    except Exception:
+        logger.error('Could not load logo', exc_info=True)
+        _APP_LABEL_OBJECT = QLabel()
+    return _APP_LABEL_OBJECT
 
 
 def flash(sender, message, *format_args, duration=0):

@@ -10,7 +10,7 @@ import uavcan
 from PyQt5.QtWidgets import QGroupBox, QLabel, QSpinBox, QHBoxLayout
 from PyQt5.QtCore import QTimer
 from logging import getLogger
-from . import make_icon_button, flash
+from . import make_icon_button, flash, get_logo_label
 
 logger = getLogger(__name__)
 
@@ -39,6 +39,8 @@ class LocalNodeWidget(QGroupBox):
         self._node_id_apply = make_icon_button('check', 'Apply local node ID', self,
                                                on_clicked=self._on_node_id_apply_clicked)
 
+        self._node_id_label_logo = get_logo_label()
+
         self._update_timer = QTimer(self)
         self._update_timer.setSingleShot(False)
         self._update_timer.timeout.connect(self._update)
@@ -47,10 +49,11 @@ class LocalNodeWidget(QGroupBox):
         self._update()
 
         layout = QHBoxLayout(self)
+        layout.addWidget(self._node_id_label_logo)
+        layout.addStretch(1)
         layout.addWidget(self._node_id_label)
         layout.addWidget(self._node_id_spinbox)
         layout.addWidget(self._node_id_apply)
-        layout.addStretch(1)
 
         self.setLayout(layout)
 
@@ -89,3 +92,4 @@ class LocalNodeWidget(QGroupBox):
             self._node.node_id = nid
             logger.info('Node ID: %s', self._node.node_id)
         self._update()
+
