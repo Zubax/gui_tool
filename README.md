@@ -79,10 +79,13 @@ These instructions are for developers only. End users should use pre-built MSI p
 
 First, install dependencies:
 
-* [WinPython 3.4 or newer, pre-packaged with PyQt5](http://winpython.github.io/).
-Make sure that `python` can be invoked from the terminal; if it can't, check your `PATH`.
-* Windows 10 SDK.
-[Free edition of Visual Studio is packaged with Windows SDK](https://www.visualstudio.com/).
+* WinPython32-3.7.7.1dot pre-packaged with PyQt5 from [WinPython](http://winpython.github.io/) or [SourceForge](https://sourceforge.net/projects/winpython/files/WinPython_3.7/3.7.7.1/).
+After installing, make sure you can run `python --version` from the terminal; if you can't, check your `PATH` environment variable.
+* [Microsoft Visual C++ 2015 Redistributable](https://www.microsoft.com/en-us/download/details.aspx?id=48145) or later.
+
+***Note***: WinPython64 will produce a large 64-bit executable; do not use this.
+
+***Note***: WinPython 3.8+ is not compatible with `pyqtgraph-0.9.0` used in this app. It requires `pyqtgraph-0.11.0` or higher.
 
 Having done that, execute the following (the script will prompt you for password to read the certificate file):
 
@@ -92,6 +95,10 @@ python -m pip uninstall -y uavcan_gui_tool
 python setup.py install
 python setup.py bdist_msi
 ```
+
+***Note***: With a new WinPython installation, dependent packages get installed as `egg` files rather than `wheels`. As a result, the `bdist_msi` fails. To resolve this, uninstall and reinstall the failed package using pip, and then rerun the commands above. Repeat until all dependent packages are fully installed in your `site-packages` python tree.
+
+***Note***: If bdist_msi cx_freeze fails with error code 4 or 6, check available disk space.
 
 Collect the resulting signed MSI from `dist/`.
 
