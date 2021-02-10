@@ -15,7 +15,7 @@ from PyQt5.QtWidgets import QDialog, QGridLayout, QLabel, QLineEdit, QGroupBox, 
 from PyQt5.QtCore import QTimer, Qt
 from PyQt5.QtGui import QPalette
 from logging import getLogger
-from . import get_monospace_font, make_icon_button, BasicTable, show_error, request_confirmation
+from . import get_monospace_font, make_icon_button, BasicTable, show_error, request_confirmation, get_logo_label
 from .node_monitor import node_health_to_color, node_mode_to_color
 
 
@@ -668,6 +668,9 @@ class NodePropertiesWindow(QDialog):
         self._node = node
         self._file_server_widget = file_server_widget
 
+        self._logo_label = get_logo_label()
+        self._logo_label.setAlignment(Qt.AlignCenter)
+
         self._info_box = InfoBox(self, target_node_id, node_monitor)
         self._controls = Controls(self, node, target_node_id, file_server_widget, dynamic_node_id_allocator_widget)
         self._config_params = ConfigParams(self, node, target_node_id)
@@ -676,6 +679,7 @@ class NodePropertiesWindow(QDialog):
         self._status_bar.setSizeGripEnabled(False)
 
         layout = QVBoxLayout(self)
+        layout.addWidget(self._logo_label)
         layout.addWidget(self._info_box)
         layout.addWidget(self._controls)
         layout.addWidget(self._config_params)

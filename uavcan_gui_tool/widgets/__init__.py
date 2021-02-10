@@ -649,20 +649,14 @@ def get_app_icon():
 
 
 def get_logo_label():
-    global _APP_LABEL_OBJECT
-    try:
-        return _APP_LABEL_OBJECT
-    except NameError:
-        pass
-    # noinspection PyBroadException
     try:
         fn = pkg_resources.resource_filename('uavcan_gui_tool', os.path.join('images', 't-motor_212x50.jpg'))
-        _APP_LABEL_OBJECT = QLabel()
-        _APP_LABEL_OBJECT.setPixmap(QPixmap(fn))
+        logo_label = QLabel()
+        logo_label.setPixmap(QPixmap(fn))
     except Exception:
         logger.error('Could not load logo', exc_info=True)
-        _APP_LABEL_OBJECT = QLabel()
-    return _APP_LABEL_OBJECT
+        logo_label = QLabel()
+    return logo_label
 
 
 def flash(sender, message, *format_args, duration=0):
